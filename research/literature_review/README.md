@@ -1,150 +1,230 @@
-การทำ **literature review (ทบทวนวรรณกรรม)** คือการ “รวบรวม + วิเคราะห์ + สังเคราะห์” งานวิจัยที่มีอยู่แล้วในหัวข้อที่เราสนใจ เพื่อให้เห็นภาพรวมว่า
-
-* คนอื่นเคยทำอะไรไปแล้ว
-* ใช้วิธีอะไร
-* ได้ผลยังไง
-* และ “ช่องว่าง” (gap) ที่เราจะไปทำต่อคืออะไร
+นี่คือ **งานวิจัย (research papers) ที่เกี่ยวกับการทำ heat map / spatial analysis ของการเดินทางไปโรงพยาบาล** จากฐาน IEEE / Springer / ScienceDirect / MDPI / ฯลฯ ที่ “ตรงโจทย์คุณมาก” (GIS + travel time + accessibility + heatmap/choropleth)
 
 ---
 
-# 🧠 อธิบายแบบง่าย
+# 🔬 1. งานระดับประเทศ (Heat map / grid-scale)
 
-มันไม่ใช่แค่ “สรุป paper ทีละอัน”
-แต่คือการ “เล่าเรื่องรวม” ว่า field นี้พัฒนาไปยังไง
+### 📄 *National-scale hospital travel time & accessibility map* (Nature / Scopus)
 
-👉 เปรียบเทียบ:
+* แหล่ง: Scientific Data (Scopus / Nature)
+* แนวคิด:
 
-* ❌ Summary: Paper A ทำแบบนี้, Paper B ทำแบบนั้น
-* ✅ Literature review: แนวโน้มของ field คืออะไร วิธีไหนนิยม และยังขาดอะไร
+  * สร้าง **heat map ระดับ 1 km grid ทั้งประเทศ**
+  * ใช้ **travel time + hospital capacity + population**
+  * ใช้โมเดล: **Gaussian 2SFCA**
+* insight สำคัญ:
 
----
+  * Heat map ไม่ควรใช้แค่ระยะทาง → ต้องรวม supply-demand ด้วย
+  * มี output ทั้งระดับ **grid / district / province**
+* ใช้กับโปรเจคคุณได้ตรง ๆ (ระดับจังหวัด)
 
-# 🧩 โครงสร้างของ Literature Review
-
-โดยทั่วไปจะมี 4 ส่วนหลัก:
-
-### 1. Introduction
-
-* หัวข้อที่เราศึกษา เช่น
-  “การเข้าถึงโรงพยาบาล (hospital accessibility)”
-* ทำไมมันสำคัญ
+👉 งานนี้ถือว่า “state-of-the-art” สำหรับทำ heatmap โรงพยาบาล
+([Nature][1])
 
 ---
 
-### 2. กลุ่มงานวิจัย (จัดเป็น theme)
+# 🧠 2. งานแนว behavior + travel pattern (ScienceDirect)
 
-แทนที่จะเรียง paper ทีละอัน → ต้อง “จัดกลุ่ม”
+### 📄 *Measuring spatial accessibility with medical travel behavior*
 
-ตัวอย่าง (จากโจทย์คุณ):
+* แหล่ง: ScienceDirect (Habitat International)
+* แนวคิด:
 
-* กลุ่ม 1: GIS + heatmap
-* กลุ่ม 2: travel time / network analysis
-* กลุ่ม 3: behavior (คนเลือกเส้นทางยังไง)
-* กลุ่ม 4: AI / recommendation
+  * ใช้ **travel chain (เส้นทางจริงของคน)** ไม่ใช่แค่ shortest path
+  * รวม:
 
----
+    * travel time
+    * travel mode (รถ/รถเมล์)
+    * behavior (คนเลือก รพ. ใกล้ที่สุด)
+* insight:
 
-### 3. เปรียบเทียบ + วิเคราะห์
+  * คน “ไม่ optimize แบบ algorithm”
+  * ความเร่งด่วน → มีผลต่อ decision
 
-* วิธีไหนดีกว่า
-* ข้อจำกัดของแต่ละงาน
-
-เช่น:
-
-* งานส่วนใหญ่ใช้ distance แต่ไม่ใช้ real-time traffic
-* งานหลายชิ้นไม่สนใจ behavior ของผู้ใช้
+👉 ถ้าจะทำ AI แนะนำเส้นทาง vs คนเลือกเอง → paper นี้โคตรตรง
+([ScienceDirect][2])
 
 ---
 
-### 4. Research Gap (สำคัญสุด 🔥)
+# 🗺️ 3. งาน GIS + จังหวัด/พื้นที่ (Springer)
 
-จุดที่ยังไม่มีใครทำ เช่น:
+### 📄 *Spatial accessibility to hospital (GIS analysis)*
 
-* ยังไม่มีงานที่ “เทียบ AI vs human decision”
-* ยังไม่มี heatmap ระดับจังหวัดในไทย
-* ยังไม่มีการวัด decision time
+* แหล่ง: Springer
+* แนวคิด:
 
-👉 ตรงนี้คือที่คุณจะทำต่อ
+  * วิเคราะห์ accessibility ระดับ **จังหวัด / township**
+  * ใช้ GIS:
 
----
+    * distance
+    * road network
+* insight:
 
-# ⚙️ ขั้นตอนการทำจริง
+  * ความเหลื่อมล้ำ urban vs rural ชัดมาก
+  * ใช้กับ policy ได้
 
-### Step 1: หา paper
-
-จาก:
-
-* IEEE
-* Springer
-* ScienceDirect
-* ACM
-* Scopus
+👉 ใช้เป็น reference สำหรับ “จังหวัดในไทย” ได้เลย
+([Springer][3])
 
 ---
 
-### Step 2: อ่านแบบมีเป้าหมาย
+# 🚗 4. งานใช้ API + travel time จริง (MDPI / Scopus)
 
-อ่านแล้วจด:
+### 📄 *Hospital accessibility using Web Mapping API*
 
-* objective
-* method
-* data
-* result
-* limitation
+* แนวคิด:
 
----
+  * ใช้ API (เช่น Google Maps) เพื่อดึง:
 
-### Step 3: จัดกลุ่ม
+    * travel time real-time
+    * peak / off-peak
+  * วิเคราะห์หลาย mode:
 
-เช่น:
+    * รถส่วนตัว
+    * public transport
+* insight:
 
-* heatmap
-* network
-* behavior
+  * เวลา peak ต่างกัน 2–4 นาที+
+  * mode มีผลกับ heatmap มาก
 
----
-
-### Step 4: เขียน “เชิงวิเคราะห์”
-
-ไม่ใช่ list แต่ต้องเขียนแบบ:
-
-> งานส่วนใหญ่ใช้ GIS-based approach ในการวิเคราะห์ accessibility อย่างไรก็ตาม งานเหล่านี้มักไม่รวมปัจจัยด้านพฤติกรรมของผู้ใช้…
+👉 อันนี้ useful ถ้าคุณจะทำ system จริง (เหมือน Google Maps)
+([MDPI][4])
 
 ---
 
-# 🧪 ตัวอย่าง (โยงกับโปรเจคคุณ)
+# 🚌 5. งาน network + public transport heatmap
 
-หัวข้อ:
-**“Heatmap การเข้าถึงโรงพยาบาล + decision making”**
+### 📄 *Accessibility via public transportation network*
 
-literature review อาจเขียนว่า:
+* แนวคิด:
 
-* งานก่อนหน้าเน้น GIS + travel time
-* บางงานเริ่มใช้ real-time data
-* แต่ยังขาด:
+  * ใช้:
 
-  * human decision behavior
-  * AI-assisted decision
+    * network analysis
+    * kernel density
+    * service area
+  * สร้าง spatial distribution map
+* insight:
 
-👉 แล้วคุณเสนอ:
+  * accessibility = function ของ:
 
-* เปรียบเทียบ AI vs human
+    * transport network
+    * distribution ของ รพ.
+* ใช้กับ heatmap ได้ตรง ๆ
+
+([MDPI][5])
 
 ---
 
-# 🔥 สรุปสั้นมาก
+# ⚙️ 6. งาน IEEE (สาย advanced / ML + GIS)
 
-**Literature review =**
+### 📄 *Spatio-temporal healthcare accessibility (IEEE)*
 
-> “การดูว่าโลกเค้าทำอะไรกันไปแล้ว แล้วเราจะต่อยอดตรงไหน”
+* แนวคิด:
+
+  * วิเคราะห์ **time-dependent accessibility**
+  * รวม:
+
+    * travel time reliability
+    * temporal variation
+* insight:
+
+  * heatmap เปลี่ยนตามเวลา (เช้า vs เย็น)
+
+👉 ถ้าจะทำ project advanced → ใส่ time dimension
+([IEEE Xplore][6])
+
+---
+
+# 🧪 Method ที่ใช้บ่อยใน research (สำคัญมาก)
+
+ถ้าคุณจะ “ทำเอง” งานพวกนี้ใช้ method พวกนี้:
+
+### 1. **2SFCA (Two-Step Floating Catchment Area)**
+
+* gold standard
+* คิด:
+
+  * hospital capacity
+  * population demand
+
+### 2. **Travel Time Map (Isochrone / Heatmap)**
+
+* ใช้:
+
+  * road network
+  * API (Google / OSM)
+
+### 3. **Kernel Density**
+
+* ใช้ทำ heatmap ความหนาแน่น
+
+### 4. **Network Analysis**
+
+* shortest path
+* multimodal
+
+### 5. **Gravity Model**
+
+* hospital ใกล้ = weight สูงกว่า
+
+👉 งานใหม่ ๆ จะ combine หลาย method
+
+---
+
+# 🧩 ถ้าจะเอาไปทำโปรเจค (แนะนำ direction)
+
+จากโจทย์คุณ (HCI + AI + decision):
+
+### idea ที่ “research-backed”
+
+1. ทำ heatmap:
+
+   * จังหวัด vs เวลาเดินทางไป รพ.
+2. เทียบ:
+
+   * คนเลือกเอง vs AI แนะนำ
+3. metric:
+
+   * เวลา
+   * ค่าใช้จ่าย
+   * comfort
+   * decision time
+
+👉 combine:
+
+* Paper #1 (heatmap)
+* Paper #2 (behavior)
+* Paper #4 (real travel time)
+
+---
+
+# 🔥 สรุปสั้น
+
+* งานสายนี้เรียกว่า:
+  👉 **“Healthcare Accessibility Analysis (GIS-based)”**
+* สิ่งที่ research ใช้:
+
+  * heatmap (grid / province)
+  * travel time
+  * population vs hospital capacity
+* method หลัก:
+
+  * 2SFCA + network analysis
 
 ---
 
 ถ้าคุณอยากได้:
 
-* ✍️ ตัวอย่าง literature review “เขียนจริง” จาก paper ที่หามาให้
-* 📊 ตารางสรุป paper (objective / method / gap)
-* 🎯 หรือช่วยเขียน section นี้ในรายงานคุณเลย
+* 🔎 “paper IEEE/ACM แบบ PDF จริง ๆ”
+* 📊 หรือ “ช่วยออกแบบ methodology ทำโปรเจคนี้”
+* 🧪 หรือ “code / tool (Python / QGIS / ArcGIS)”
 
-บอกได้เลย เดี๋ยช่วยจัดให้แบบส่งอาจารย์ได้เลย 👍
+บอกได้เลย เดี๋ยจัดให้แบบเอาไปใช้ทำ research ได้จริง 👍
 
+[1]: https://www.nature.com/articles/s41597-024-03981-y?utm_source=chatgpt.com "National-scale 1-km maps of hospital travel time and hospital accessibility in China | Scientific Data"
+[2]: https://www.sciencedirect.com/science/article/pii/S0197397525000244?utm_source=chatgpt.com "Measuring spatial accessibility to medical facilities: Aligning with actual medical travel behavior - ScienceDirect"
+[3]: https://link.springer.com/article/10.1007/s43762-022-00037-y?utm_source=chatgpt.com "Spatial accessibility of township to county hospital and its disparity among age and urbanizing groups in Anhui, China- a GIS analysis | Computational Urban Science | Springer Nature Link"
+[4]: https://www.mdpi.com/2071-1050/11/4/1160?utm_source=chatgpt.com "Spatial Accessibility to Hospitals Based on Web Mapping API: An Empirical Study in Kaifeng, China | MDPI"
+[5]: https://www.mdpi.com/1660-4601/19/23/16224?utm_source=chatgpt.com "Spatial Accessibility Analysis of Medical Facilities Based on Public Transportation Networks | MDPI"
+[6]: https://ieeexplore.ieee.org/document/9363744?utm_source=chatgpt.com "Analysis of Spatio-Temporal Characteristics of Healthcare Accessibility Considering Travel Time Reliability"
