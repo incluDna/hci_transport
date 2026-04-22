@@ -12,13 +12,13 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0a0e1a;
-  --surface:#111827;
-  --surface2:#1a2235;
+  --bg:#ced0d5;
+  --surface:#eff1f5;
+  --surface2:#cfdbf7;
   --border:#1e2d47;
-  --text:#e2e8f0;
+  --text:#292e35;
   --muted:#64748b;
-  --accent:#38bdf8;
+  --accent:#3858f8;
   --bts:#00c853;
   --mrt:#ff9100;
   --boat:#2196f3;
@@ -93,16 +93,16 @@ select:hover,select:focus{border-color:var(--accent);outline:none}
 .fchip-dot{width:7px;height:7px;border-radius:50%}
 
 /* Map overlays */
-#map-legend{position:absolute;bottom:24px;left:12px;z-index:999;background:rgba(10,14,26,.92);border:1px solid var(--border);border-radius:10px;padding:10px 14px;font-size:11px;color:var(--muted)}
+#map-legend{position:absolute;bottom:24px;left:12px;z-index:999;background:rgba(255,255,255,.95);border:1px solid #d1d5db;border-radius:10px;padding:10px 14px;font-size:11px;color:#374151;box-shadow:0 2px 8px rgba(0,0,0,.1)}
 .leg-row{display:flex;align-items:center;gap:8px;margin-bottom:5px}
 .leg-row:last-child{margin-bottom:0}
 .leg-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
 .leg-line{width:24px;height:4px;border-radius:2px;flex-shrink:0}
 #map-info{position:absolute;top:12px;right:12px;z-index:999;background:rgba(10,14,26,.92);border:1px solid var(--border);border-radius:10px;padding:10px 14px;font-size:11px;color:var(--muted);max-width:200px;display:none}
 .toggle-layer-btn{position:absolute;top:12px;left:12px;z-index:999;display:flex;flex-direction:column;gap:4px}
-.tl-btn{background:rgba(10,14,26,.92);border:1px solid var(--border);color:var(--muted);padding:6px 12px;border-radius:7px;cursor:pointer;font-family:'Sarabun',sans-serif;font-size:12px;transition:all .15s}
+.tl-btn{background:rgba(255,255,255,.95);border:1px solid #d1d5db;color:#374151;padding:6px 12px;border-radius:7px;cursor:pointer;font-family:'Sarabun',sans-serif;font-size:12px;transition:all .15s;box-shadow:0 1px 4px rgba(0,0,0,.1)}
 .tl-btn.on{border-color:var(--accent);color:var(--accent)}
-.tl-btn:hover{background:var(--surface2)}
+.tl-btn:hover{background:#f3f4f6}
 
 /* Scrollbar */
 #sidebar::-webkit-scrollbar{width:4px}
@@ -194,6 +194,7 @@ select:hover,select:focus{border-color:var(--accent);outline:none}
       <div class="fchip"><div class="fchip-dot" style="background:#69f0ae"></div>Pun Pun (ปลาย) 200ม.</div>
       <div class="fchip"><div class="fchip-dot" style="background:#2196f3"></div>เรือแสนแสบ ผ่านเส้นนี้</div>
       <div class="fchip"><div class="fchip-dot" style="background:#ffd600"></div>แท็กซี่เริ่ม 35฿</div>
+      <div class="fchip"><div class="fchip-dot" style="background:#947732"></div>รถเมล์ ตลอดสาย 8฿</div>
     </div>
   </div>
 
@@ -210,7 +211,7 @@ select:hover,select:focus{border-color:var(--accent);outline:none}
     <button class="tl-btn on" id="btn-bike" onclick="toggleLayer('bike')">🚲 จักรยาน</button>
   </div>
   <div id="map-legend">
-    <div style="font-size:12px;font-weight:600;color:#e2e8f0;margin-bottom:8px">แผนที่เส้นทาง</div>
+    <div style="font-size:12px;font-weight:600;color:#111827;margin-bottom:8px">แผนที่เส้นทาง</div>
     <div class="leg-row"><div class="leg-line" style="background:#00c853"></div>BTS สายสุขุมวิท</div>
     <div class="leg-row"><div class="leg-line" style="background:#00b0ff"></div>BTS สายสีลม</div>
     <div class="leg-row"><div class="leg-line" style="background:#ff9100"></div>MRT สายสีน้ำเงิน</div>
@@ -218,8 +219,8 @@ select:hover,select:focus{border-color:var(--accent);outline:none}
     <div class="leg-row"><div class="leg-dot" style="background:#ff5252"></div>วินมอเตอร์ไซค์</div>
     <div class="leg-row"><div class="leg-dot" style="background:#69f0ae"></div>สถานีจักรยาน</div>
     <div class="leg-row"><div class="leg-dot" style="background:#ffd600"></div>ต้นทาง / ปลายทาง</div>
-    <div style="margin-top:8px;padding-top:8px;border-top:1px solid #1e2d47">
-      <div style="font-size:10px;color:#64748b;margin-bottom:4px">Heatmap = ความหนาแน่นจราจร</div>
+    <div style="margin-top:8px;padding-top:8px;border-top:1px solid #e5e7eb">
+      <div style="font-size:10px;color:#6b7280;margin-bottom:4px">Heatmap = ความหนาแน่นจราจร</div>
       <div style="display:flex;align-items:center;gap:3px">
         <div style="width:12px;height:8px;border-radius:2px;background:#00ff00;opacity:.6"></div>
         <div style="width:12px;height:8px;border-radius:2px;background:#ffff00;opacity:.7"></div>
@@ -402,8 +403,8 @@ const map = L.map('map', {
   zoomControl: true
 });
 
-// Dark tile layer (CartoDB dark)
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+// Light tile layer (CartoDB Positron)
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
   attribution: '&copy; <a href="https://carto.com/">CARTO</a>',
   subdomains: 'abcd',
   maxZoom: 19
@@ -426,7 +427,7 @@ const btsSukLine = L.polyline(BTS_SUK.map(s=>[s.lat,s.lng]), {
   color:'#00c853', weight:4, opacity:.85, dashArray:null
 }).addTo(layers.bts);
 BTS_SUK.forEach(s => {
-  L.circleMarker([s.lat,s.lng],{radius:5,fillColor:'#00c853',fillOpacity:1,color:'#0a0e1a',weight:2})
+  L.circleMarker([s.lat,s.lng],{radius:5,fillColor:'#00c853',fillOpacity:1,color:'#fff',weight:2})
     .bindPopup(`<b style="color:#00c853">BTS สุขุมวิท</b><br>${s.name}`)
     .addTo(layers.bts);
 });
@@ -435,7 +436,7 @@ const btsSilLine = L.polyline(BTS_SIL.map(s=>[s.lat,s.lng]), {
   color:'#00b0ff', weight:4, opacity:.85
 }).addTo(layers.bts);
 BTS_SIL.forEach(s => {
-  L.circleMarker([s.lat,s.lng],{radius:5,fillColor:'#00b0ff',fillOpacity:1,color:'#0a0e1a',weight:2})
+  L.circleMarker([s.lat,s.lng],{radius:5,fillColor:'#00b0ff',fillOpacity:1,color:'#fff',weight:2})
     .bindPopup(`<b style="color:#00b0ff">BTS สีลม</b><br>${s.name}`)
     .addTo(layers.bts);
 });
@@ -445,7 +446,7 @@ layers.bts.addTo(map);
 layers.mrt = L.layerGroup();
 L.polyline(MRT_BLUE.map(s=>[s.lat,s.lng]),{color:'#ff9100',weight:4,opacity:.85}).addTo(layers.mrt);
 MRT_BLUE.forEach(s => {
-  L.circleMarker([s.lat,s.lng],{radius:5,fillColor:'#ff9100',fillOpacity:1,color:'#0a0e1a',weight:2})
+  L.circleMarker([s.lat,s.lng],{radius:5,fillColor:'#ff9100',fillOpacity:1,color:'#fff',weight:2})
     .bindPopup(`<b style="color:#ff9100">MRT สีน้ำเงิน</b><br>${s.name}`)
     .addTo(layers.mrt);
 });
@@ -455,7 +456,7 @@ layers.mrt.addTo(map);
 layers.boat = L.layerGroup();
 L.polyline(KHLONG_BOAT.map(s=>[s.lat,s.lng]),{color:'#2196f3',weight:3,opacity:.8,dashArray:'8,5'}).addTo(layers.boat);
 KHLONG_BOAT.forEach(s => {
-  L.circleMarker([s.lat,s.lng],{radius:5,fillColor:'#2196f3',fillOpacity:1,color:'#0a0e1a',weight:2})
+  L.circleMarker([s.lat,s.lng],{radius:5,fillColor:'#2196f3',fillOpacity:1,color:'#fff',weight:2})
     .bindPopup(`<b style="color:#2196f3">เรือแสนแสบ</b><br>${s.name}`)
     .addTo(layers.boat);
 });
@@ -464,7 +465,7 @@ layers.boat.addTo(map);
 // วินมอเตอร์ไซค์
 layers.moto = L.layerGroup();
 const motoIcon = L.divIcon({
-  html:'<div style="background:#ff5252;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;border:2px solid #0a0e1a">🛵</div>',
+  html:'<div style="background:#ff5252;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;border:2px solid #fff">🛵</div>',
   className:'',iconSize:[20,20],iconAnchor:[10,10]
 });
 MOTO_STANDS.forEach(s => {
@@ -477,7 +478,7 @@ layers.moto.addTo(map);
 // จักรยาน
 layers.bike = L.layerGroup();
 const bikeIcon = L.divIcon({
-  html:'<div style="background:#69f0ae;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;border:2px solid #0a0e1a">🚲</div>',
+  html:'<div style="background:#69f0ae;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;border:2px solid #fff">🚲</div>',
   className:'',iconSize:[20,20],iconAnchor:[10,10]
 });
 BIKE_STATIONS.forEach(s => {
@@ -489,11 +490,11 @@ layers.bike.addTo(map);
 
 // Origin / Dest markers
 const originIcon = L.divIcon({
-  html:'<div style="background:#ffd600;color:#000;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:3px solid #0a0e1a;font-family:Sarabun">A</div>',
+  html:'<div style="background:#ffd600;color:#000;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:3px solid #fff;font-family:Sarabun">A</div>',
   className:'',iconSize:[28,28],iconAnchor:[14,14]
 });
 const destIcon = L.divIcon({
-  html:'<div style="background:#ff5252;color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:3px solid #0a0e1a;font-family:Sarabun">B</div>',
+  html:'<div style="background:#ff5252;color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:3px solid #fff;font-family:Sarabun">B</div>',
   className:'',iconSize:[28,28],iconAnchor:[14,14]
 });
 
