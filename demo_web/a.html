@@ -12,128 +12,109 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0a0e1a;
-  --surface:#111827;
-  --surface2:#1a2235;
-  --border:#1e2d47;
-  --text:#e2e8f0;
+  --bg:#f1f5f9;
+  --surface:#ffffff;
+  --surface2:#f8fafc;
+  --border:#e2e8f0;
+  --border2:#cbd5e1;
+  --text:#0f172a;
   --muted:#64748b;
-  --accent:#38bdf8;
-  --bts:#00c853;
-  --mrt:#ff9100;
-  --boat:#2196f3;
-  --moto:#ff5252;
-  --taxi:#ffd600;
-  --bike:#69f0ae;
-  --walk:#90a4ae;
+  --accent:#0ea5e9;
+  --accent-bg:#f0f9ff;
+  --bus:#7c3aed;
 }
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Sarabun',sans-serif;overflow:hidden}
+#app{display:grid;grid-template-columns:390px 1fr;grid-template-rows:54px 1fr;height:100vh}
 
-/* === LAYOUT === */
-#app{display:grid;grid-template-columns:380px 1fr;grid-template-rows:56px 1fr;height:100vh}
-#topbar{grid-column:1/-1;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:16px;padding:0 20px;z-index:1000}
-#sidebar{background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;display:flex;flex-direction:column;gap:0}
-#map{position:relative}
-
-/* === TOPBAR === */
-.brand{font-size:15px;font-weight:600;color:var(--accent);letter-spacing:-.3px;display:flex;align-items:center;gap:8px}
+/* TOPBAR */
+#topbar{grid-column:1/-1;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:14px;padding:0 18px;z-index:1000;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.brand{font-size:15px;font-weight:600;color:var(--accent);letter-spacing:-.3px;display:flex;align-items:center;gap:8px;white-space:nowrap}
 .brand-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
-.topbar-sep{width:1px;height:24px;background:var(--border)}
-.route-selectors{display:flex;align-items:center;gap:10px;flex:1}
-.route-label{font-size:12px;color:var(--muted);white-space:nowrap}
-select{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:8px;font-family:'Sarabun',sans-serif;font-size:13px;cursor:pointer;transition:border-color .2s}
-select:hover,select:focus{border-color:var(--accent);outline:none}
-.swap-btn{background:var(--surface2);border:1px solid var(--border);color:var(--accent);padding:6px 12px;border-radius:8px;cursor:pointer;font-size:14px;transition:all .2s}
-.swap-btn:hover{background:var(--accent);color:#000}
-.time-group{display:flex;align-items:center;gap:8px;margin-left:auto}
-.time-label{font-size:12px;color:var(--muted)}
-#timeSlider{-webkit-appearance:none;width:120px;height:4px;border-radius:2px;background:var(--border);outline:none;cursor:pointer}
-#timeSlider::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--accent);cursor:pointer}
-.time-display{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--accent);min-width:50px}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.75)}}
+.topbar-sep{width:1px;height:22px;background:var(--border);flex-shrink:0}
+.route-selectors{display:flex;align-items:center;gap:8px;flex:1;overflow:hidden}
+.route-label{font-size:11px;color:var(--muted);white-space:nowrap;font-weight:500}
+select{background:#fff;border:1px solid var(--border2);color:var(--text);padding:5px 9px;border-radius:7px;font-family:'Sarabun',sans-serif;font-size:13px;cursor:pointer;transition:border-color .18s}
+select:hover,select:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px #0ea5e915}
+.swap-btn{background:#fff;border:1px solid var(--border2);color:var(--accent);padding:5px 10px;border-radius:7px;cursor:pointer;font-size:13px;transition:all .18s;white-space:nowrap}
+.swap-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.time-group{display:flex;align-items:center;gap:8px;margin-left:auto;flex-shrink:0}
+.time-label{font-size:11px;color:var(--muted);white-space:nowrap}
+#timeSlider{-webkit-appearance:none;width:110px;height:4px;border-radius:2px;background:var(--border);outline:none;cursor:pointer}
+#timeSlider::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--accent);cursor:pointer;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.time-display{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--accent);min-width:46px;font-weight:500}
 
-/* === SIDEBAR === */
-.sidebar-section{border-bottom:1px solid var(--border);padding:14px 16px}
+/* SIDEBAR */
+#sidebar{background:#fff;border-right:1px solid var(--border);overflow-y:auto;display:flex;flex-direction:column}
+.sidebar-section{border-bottom:1px solid var(--border);padding:13px 15px}
 .sidebar-section:last-child{border-bottom:none}
-.sec-title{font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.sec-title{font-size:10px;font-weight:600;letter-spacing:.9px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:6px}
 .sec-badge{padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600}
-.sec-badge.fm{background:#7c3aed22;color:#a78bfa}
-.sec-badge.main{background:#0369a122;color:#38bdf8}
-.sec-badge.lm{background:#04785722;color:#34d399}
-
-/* Route rows */
-.route-row{display:grid;grid-template-columns:30px 1fr auto;gap:8px;align-items:center;padding:8px 10px;border-radius:8px;cursor:pointer;border:1px solid transparent;transition:all .18s;margin-bottom:3px}
+.sec-badge.fm{background:#7c3aed15;color:#7c3aed}
+.sec-badge.main{background:#0ea5e915;color:#0284c7}
+.sec-badge.lm{background:#16a34a15;color:#15803d}
+.route-row{display:grid;grid-template-columns:30px 1fr auto;gap:8px;align-items:center;padding:7px 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;transition:all .15s;margin-bottom:2px}
 .route-row:hover{background:var(--surface2);border-color:var(--border)}
-.route-row.active{background:var(--surface2);border-color:var(--accent)}
-.mode-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px}
-.rinfo-name{font-size:13px;font-weight:500;color:var(--text)}
-.rinfo-detail{font-size:11px;color:var(--muted);margin-top:1px}
-.rinfo-freq{font-size:10px;margin-top:2px}
-.rmeta{text-align:right}
-.rmeta-time{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;color:var(--text)}
-.rmeta-price{font-size:11px;color:var(--muted);margin-top:1px}
-.best-tag{font-size:9px;padding:1px 5px;border-radius:5px;background:#00c85322;color:#00c853;margin-top:2px;display:inline-block}
-
-/* Sort buttons */
-.sort-row{display:flex;gap:5px;margin-bottom:10px}
-.sbtn{flex:1;padding:5px 0;border-radius:7px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'Sarabun',sans-serif;font-size:12px;cursor:pointer;transition:all .15s;text-align:center}
-.sbtn.active{background:var(--accent)22;border-color:var(--accent);color:var(--accent)}
+.mode-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.rinfo-name{font-size:12px;font-weight:600;color:var(--text);line-height:1.3}
+.rinfo-detail{font-size:10px;color:var(--muted);margin-top:1px;line-height:1.4}
+.rinfo-freq{font-size:10px;margin-top:2px;font-weight:500}
+.rmeta{text-align:right;flex-shrink:0}
+.rmeta-time{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;color:var(--text)}
+.rmeta-price{font-size:10px;color:var(--muted);margin-top:1px}
+.best-tag{font-size:9px;padding:1px 5px;border-radius:5px;background:#dcfce7;color:#15803d;margin-top:2px;display:inline-block;font-weight:600}
+.sort-row{display:flex;gap:4px;margin-bottom:9px}
+.sbtn{flex:1;padding:5px 0;border-radius:6px;border:1px solid var(--border);background:#fff;color:var(--muted);font-family:'Sarabun',sans-serif;font-size:11px;cursor:pointer;transition:all .13s;text-align:center}
+.sbtn.active{background:var(--accent-bg);border-color:var(--accent);color:var(--accent);font-weight:600}
 .sbtn:hover:not(.active){background:var(--surface2)}
-
-/* Compare panel */
 .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.cmp-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px}
-.cmp-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
-.cmp-val{font-size:18px;font-weight:600;color:var(--accent);font-family:'IBM Plex Mono',monospace}
-.cmp-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.cmp-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:9px 11px}
+.cmp-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px;font-weight:600}
+.cmp-val{font-size:17px;font-weight:600;color:var(--accent);font-family:'IBM Plex Mono',monospace}
+.cmp-sub{font-size:10px;color:var(--muted);margin-top:2px}
+.facility-list{display:flex;flex-wrap:wrap;gap:5px}
+.fchip{display:flex;align-items:center;gap:5px;padding:3px 9px;border-radius:20px;border:1px solid var(--border);font-size:10px;color:var(--muted);background:var(--surface2)}
+.fchip-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 
-/* Facility chips */
-.facility-list{display:flex;flex-wrap:wrap;gap:6px}
-.fchip{display:flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;border:1px solid var(--border);font-size:11px;color:var(--muted);background:var(--surface2)}
-.fchip-dot{width:7px;height:7px;border-radius:50%}
-
-/* Map overlays */
-#map-legend{position:absolute;bottom:24px;left:12px;z-index:999;background:rgba(255,255,255,.95);border:1px solid #d1d5db;border-radius:10px;padding:10px 14px;font-size:11px;color:#374151;box-shadow:0 2px 8px rgba(0,0,0,.1)}
-.leg-row{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+/* MAP */
+#map{position:relative;background:#f8fafc}
+#map-legend{position:absolute;bottom:20px;left:10px;z-index:999;background:rgba(255,255,255,.97);border:1px solid #e2e8f0;border-radius:10px;padding:10px 13px;font-size:11px;color:#374151;box-shadow:0 2px 10px rgba(0,0,0,.1)}
+.leg-row{display:flex;align-items:center;gap:8px;margin-bottom:4px;color:#374151;font-size:11px}
 .leg-row:last-child{margin-bottom:0}
-.leg-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
-.leg-line{width:24px;height:4px;border-radius:2px;flex-shrink:0}
-#map-info{position:absolute;top:12px;right:12px;z-index:999;background:rgba(10,14,26,.92);border:1px solid var(--border);border-radius:10px;padding:10px 14px;font-size:11px;color:var(--muted);max-width:200px;display:none}
-.toggle-layer-btn{position:absolute;top:12px;left:12px;z-index:999;display:flex;flex-direction:column;gap:4px}
-.tl-btn{background:rgba(255,255,255,.95);border:1px solid #d1d5db;color:#374151;padding:6px 12px;border-radius:7px;cursor:pointer;font-family:'Sarabun',sans-serif;font-size:12px;transition:all .15s;box-shadow:0 1px 4px rgba(0,0,0,.1)}
-.tl-btn.on{border-color:var(--accent);color:var(--accent)}
-.tl-btn:hover{background:#f3f4f6}
+.leg-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+.leg-sq{width:11px;height:11px;border-radius:3px;flex-shrink:0}
+.leg-line{width:22px;height:4px;border-radius:2px;flex-shrink:0}
+.leg-dash{width:22px;height:0;border-top:3px dashed;flex-shrink:0;opacity:.8}
+.toggle-layer-btn{position:absolute;top:10px;left:10px;z-index:999;display:flex;flex-direction:column;gap:3px}
+.tl-btn{background:rgba(255,255,255,.97);border:1px solid #d1d5db;color:#6b7280;padding:5px 11px;border-radius:6px;cursor:pointer;font-family:'Sarabun',sans-serif;font-size:11px;font-weight:500;transition:all .15s;box-shadow:0 1px 3px rgba(0,0,0,.08);white-space:nowrap}
+.tl-btn.on{border-color:var(--accent);color:var(--accent);background:#f0f9ff}
+.tl-btn:hover{background:#f8fafc}
 
-/* Scrollbar */
 #sidebar::-webkit-scrollbar{width:4px}
 #sidebar::-webkit-scrollbar-track{background:transparent}
-#sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+#sidebar::-webkit-scrollbar-thumb{background:#e2e8f0;border-radius:2px}
 </style>
 </head>
 <body>
 <div id="app">
 
-<!-- TOPBAR -->
 <div id="topbar">
-  <div class="brand">
-    <div class="brand-dot"></div>
-    Bangkok Transit
-  </div>
+  <div class="brand"><div class="brand-dot"></div>Bangkok Transit</div>
   <div class="topbar-sep"></div>
   <div class="route-selectors">
     <span class="route-label">ต้นทาง</span>
     <select id="origin" onchange="recalcRoute()">
-      <option value="siam">สยาม (Siam)</option>
-      <option value="asok">อโศก (Asok)</option>
-      <option value="mochit">หมอชิต (Mo Chit)</option>
-      <option value="silom">สีลม (Silom)</option>
-      <option value="onnut">อ่อนนุช (On Nut)</option>
+      <option value="siam">สยาม</option>
+      <option value="asok">อโศก</option>
+      <option value="mochit">หมอชิต</option>
+      <option value="silom">สีลม</option>
+      <option value="onnut">อ่อนนุช</option>
     </select>
-    <button class="swap-btn" onclick="swapLoc()">⇄</button>
+    <button class="swap-btn" onclick="swapLoc()">⇄ สลับ</button>
     <span class="route-label">ปลายทาง</span>
     <select id="dest" onchange="recalcRoute()">
-      <option value="chatuchak">จตุจักร (Chatuchak)</option>
-      <option value="lumpini">ลุมพินี (Lumpini)</option>
+      <option value="chatuchak">จตุจักร</option>
+      <option value="lumpini">ลุมพินี</option>
       <option value="sukhumvit71">สุขุมวิท 71</option>
       <option value="chinatown">เยาวราช</option>
       <option value="ratchada">รัชดา</option>
@@ -146,16 +127,11 @@ select:hover,select:focus{border-color:var(--accent);outline:none}
   </div>
 </div>
 
-<!-- SIDEBAR -->
 <div id="sidebar">
-
-  <!-- COMPARE -->
   <div class="sidebar-section">
     <div class="sec-title">สรุปเปรียบเทียบ</div>
     <div class="compare-grid" id="comparegrid"></div>
   </div>
-
-  <!-- FM -->
   <div class="sidebar-section">
     <div class="sec-title">First Mile <span class="sec-badge fm">FM</span></div>
     <div class="sort-row">
@@ -164,8 +140,6 @@ select:hover,select:focus{border-color:var(--accent);outline:none}
     </div>
     <div id="fm-list"></div>
   </div>
-
-  <!-- MAIN -->
   <div class="sidebar-section">
     <div class="sec-title">Main Route <span class="sec-badge main">MAIN</span></div>
     <div class="sort-row">
@@ -174,8 +148,6 @@ select:hover,select:focus{border-color:var(--accent);outline:none}
     </div>
     <div id="main-list"></div>
   </div>
-
-  <!-- LM -->
   <div class="sidebar-section">
     <div class="sec-title">Last Mile <span class="sec-badge lm">LM</span></div>
     <div class="sort-row">
@@ -184,351 +156,214 @@ select:hover,select:focus{border-color:var(--accent);outline:none}
     </div>
     <div id="lm-list"></div>
   </div>
-
-  <!-- FACILITIES -->
   <div class="sidebar-section">
-    <div class="sec-title">สิ่งอำนวยความสะดวกใกล้เคียง</div>
+    <div class="sec-title">สิ่งอำนวยความสะดวก</div>
     <div class="facility-list">
-      <div class="fchip"><div class="fchip-dot" style="background:#ff5252"></div>วินมอไซค์ 3 จุด</div>
-      <div class="fchip"><div class="fchip-dot" style="background:#69f0ae"></div>Pun Pun (ต้น) 150ม.</div>
-      <div class="fchip"><div class="fchip-dot" style="background:#69f0ae"></div>Pun Pun (ปลาย) 200ม.</div>
-      <div class="fchip"><div class="fchip-dot" style="background:#2196f3"></div>เรือแสนแสบ ผ่านเส้นนี้</div>
-      <div class="fchip"><div class="fchip-dot" style="background:#ffd600"></div>แท็กซี่เริ่ม 35฿</div>
+      <div class="fchip"><div class="fchip-dot" style="background:#dc2626"></div>วินมอไซค์ 3 จุด</div>
+      <div class="fchip"><div class="fchip-dot" style="background:#16a34a"></div>Pun Pun ต้นทาง 150ม.</div>
+      <div class="fchip"><div class="fchip-dot" style="background:#16a34a"></div>Pun Pun ปลายทาง 200ม.</div>
+      <div class="fchip"><div class="fchip-dot" style="background:#2563eb"></div>เรือแสนแสบ</div>
+      <div class="fchip"><div class="fchip-dot" style="background:#7c3aed"></div>รถเมล์ขสมก. 4 สาย</div>
+      <div class="fchip"><div class="fchip-dot" style="background:#ca8a04"></div>แท็กซี่เริ่ม 35฿</div>
     </div>
   </div>
-
 </div>
 
-<!-- MAP -->
 <div id="map">
   <div class="toggle-layer-btn">
     <button class="tl-btn on" id="btn-heat" onclick="toggleLayer('heat')">🌡 Heatmap</button>
-    <button class="tl-btn on" id="btn-bts" onclick="toggleLayer('bts')">🚊 BTS</button>
-    <button class="tl-btn on" id="btn-mrt" onclick="toggleLayer('mrt')">🚇 MRT</button>
+    <button class="tl-btn on" id="btn-bts"  onclick="toggleLayer('bts')">🚊 BTS</button>
+    <button class="tl-btn on" id="btn-mrt"  onclick="toggleLayer('mrt')">🚇 MRT</button>
     <button class="tl-btn on" id="btn-boat" onclick="toggleLayer('boat')">⛵ เรือ</button>
+    <button class="tl-btn on" id="btn-bus"  onclick="toggleLayer('bus')">🚌 รถเมล์</button>
     <button class="tl-btn on" id="btn-moto" onclick="toggleLayer('moto')">🛵 วินมอไซค์</button>
     <button class="tl-btn on" id="btn-bike" onclick="toggleLayer('bike')">🚲 จักรยาน</button>
   </div>
   <div id="map-legend">
-    <div style="font-size:12px;font-weight:600;color:#111827;margin-bottom:8px">แผนที่เส้นทาง</div>
-    <div class="leg-row"><div class="leg-line" style="background:#00c853"></div>BTS สายสุขุมวิท</div>
-    <div class="leg-row"><div class="leg-line" style="background:#00b0ff"></div>BTS สายสีลม</div>
-    <div class="leg-row"><div class="leg-line" style="background:#ff9100"></div>MRT สายสีน้ำเงิน</div>
-    <div class="leg-row"><div class="leg-line" style="background:#2196f3"></div>เรือคลองแสนแสบ</div>
-    <div class="leg-row"><div class="leg-dot" style="background:#ff5252"></div>วินมอเตอร์ไซค์</div>
-    <div class="leg-row"><div class="leg-dot" style="background:#69f0ae"></div>สถานีจักรยาน</div>
-    <div class="leg-row"><div class="leg-dot" style="background:#ffd600"></div>ต้นทาง / ปลายทาง</div>
-    <div style="margin-top:8px;padding-top:8px;border-top:1px solid #e5e7eb">
-      <div style="font-size:10px;color:#6b7280;margin-bottom:4px">Heatmap = ความหนาแน่นจราจร</div>
+    <div style="font-size:11px;font-weight:600;color:#111827;margin-bottom:7px">เส้นทาง</div>
+    <div class="leg-row"><div class="leg-line" style="background:#059669"></div>BTS สุขุมวิท</div>
+    <div class="leg-row"><div class="leg-line" style="background:#0891b2"></div>BTS สีลม</div>
+    <div class="leg-row"><div class="leg-line" style="background:#d97706"></div>MRT สีน้ำเงิน</div>
+    <div class="leg-row"><div class="leg-dash" style="border-color:#2563eb"></div>เรือแสนแสบ</div>
+    <div class="leg-row"><div class="leg-dash" style="border-color:#7c3aed"></div>รถเมล์ขสมก.</div>
+    <div class="leg-row"><div class="leg-dot" style="background:#dc2626"></div>วินมอเตอร์ไซค์</div>
+    <div class="leg-row"><div class="leg-dot" style="background:#16a34a"></div>สถานีจักรยาน</div>
+    <div class="leg-row"><div class="leg-sq" style="background:#7c3aed"></div>ป้ายรถเมล์</div>
+    <div class="leg-row"><div class="leg-dot" style="background:#f59e0b"></div>ต้นทาง (A) / ปลายทาง (B)</div>
+    <div style="margin-top:7px;padding-top:7px;border-top:1px solid #e5e7eb">
+      <div style="font-size:9px;color:#9ca3af;margin-bottom:4px">Heatmap = ความหนาแน่นจราจร</div>
       <div style="display:flex;align-items:center;gap:3px">
-        <div style="width:12px;height:8px;border-radius:2px;background:#00ff00;opacity:.6"></div>
-        <div style="width:12px;height:8px;border-radius:2px;background:#ffff00;opacity:.7"></div>
-        <div style="width:12px;height:8px;border-radius:2px;background:#ff8800;opacity:.8"></div>
-        <div style="width:12px;height:8px;border-radius:2px;background:#ff0000;opacity:.9"></div>
-        <span style="margin-left:4px">น้อย → มาก</span>
+        <div style="width:11px;height:7px;border-radius:2px;background:#00ff00;opacity:.6"></div>
+        <div style="width:11px;height:7px;border-radius:2px;background:#ffff00;opacity:.7"></div>
+        <div style="width:11px;height:7px;border-radius:2px;background:#ff8800;opacity:.8"></div>
+        <div style="width:11px;height:7px;border-radius:2px;background:#ff0000;opacity:.9"></div>
+        <span style="margin-left:4px;font-size:9px;color:#6b7280">น้อย → มาก</span>
       </div>
     </div>
   </div>
-  <div id="map-info"></div>
 </div>
 
 </div>
-
 <script>
-// ============================================================
-// DATA
-// ============================================================
-const LOCATIONS = {
-  siam:       {lat:13.7456,lng:100.5342,name:'สยาม'},
-  asok:       {lat:13.7366,lng:100.5602,name:'อโศก'},
-  mochit:     {lat:13.8026,lng:100.5531,name:'หมอชิต'},
-  silom:      {lat:13.7286,lng:100.5296,name:'สีลม'},
-  onnut:      {lat:13.7017,lng:100.6012,name:'อ่อนนุช'},
-  chatuchak:  {lat:13.7997,lng:100.5506,name:'จตุจักร'},
-  lumpini:    {lat:13.7310,lng:100.5418,name:'ลุมพินี'},
-  sukhumvit71:{lat:13.7178,lng:100.5859,name:'สุขุมวิท 71'},
-  chinatown:  {lat:13.7390,lng:100.5110,name:'เยาวราช'},
-  ratchada:   {lat:13.7710,lng:100.5700,name:'รัชดา'},
+const LOCATIONS={
+  siam:{lat:13.7456,lng:100.5342,name:'สยาม'},asok:{lat:13.7366,lng:100.5602,name:'อโศก'},
+  mochit:{lat:13.8026,lng:100.5531,name:'หมอชิต'},silom:{lat:13.7286,lng:100.5296,name:'สีลม'},
+  onnut:{lat:13.7017,lng:100.6012,name:'อ่อนนุช'},chatuchak:{lat:13.7997,lng:100.5506,name:'จตุจักร'},
+  lumpini:{lat:13.7310,lng:100.5418,name:'ลุมพินี'},sukhumvit71:{lat:13.7178,lng:100.5859,name:'สุขุมวิท 71'},
+  chinatown:{lat:13.7390,lng:100.5110,name:'เยาวราช'},ratchada:{lat:13.7710,lng:100.5700,name:'รัชดา'},
 };
-
-// BTS Sukhumvit line stations (ละติจูด/ลองจิจูดจริง)
-const BTS_SUK = [
-  {lat:13.8026,lng:100.5531,name:'หมอชิต'},
-  {lat:13.7976,lng:100.5531,name:'สะพานควาย'},
-  {lat:13.7835,lng:100.5427,name:'อารีย์'},
-  {lat:13.7766,lng:100.5388,name:'สนามเป้า'},
-  {lat:13.7660,lng:100.5387,name:'อนุสาวรีย์ชัย'},
-  {lat:13.7563,lng:100.5389,name:'พญาไท'},
-  {lat:13.7456,lng:100.5342,name:'ราชเทวี'},
-  {lat:13.7456,lng:100.5342,name:'สยาม'},
-  {lat:13.7394,lng:100.5488,name:'ชิดลม'},
-  {lat:13.7394,lng:100.5588,name:'เพลินจิต'},
-  {lat:13.7366,lng:100.5602,name:'นานา'},
-  {lat:13.7366,lng:100.5602,name:'อโศก'},
-  {lat:13.7274,lng:100.5685,name:'พร้อมพงษ์'},
-  {lat:13.7228,lng:100.5761,name:'ทองหล่อ'},
-  {lat:13.7178,lng:100.5859,name:'เอกมัย'},
-  {lat:13.7097,lng:100.5944,name:'ปุณณวิถี'},
+const BTS_SUK=[
+  {lat:13.8026,lng:100.5531,name:'หมอชิต'},{lat:13.7976,lng:100.5531,name:'สะพานควาย'},
+  {lat:13.7835,lng:100.5427,name:'อารีย์'},{lat:13.7766,lng:100.5388,name:'สนามเป้า'},
+  {lat:13.7660,lng:100.5387,name:'อนุสาวรีย์ชัย'},{lat:13.7563,lng:100.5389,name:'พญาไท'},
+  {lat:13.7456,lng:100.5342,name:'สยาม'},{lat:13.7394,lng:100.5488,name:'ชิดลม'},
+  {lat:13.7394,lng:100.5588,name:'เพลินจิต'},{lat:13.7366,lng:100.5602,name:'อโศก'},
+  {lat:13.7274,lng:100.5685,name:'พร้อมพงษ์'},{lat:13.7228,lng:100.5761,name:'ทองหล่อ'},
+  {lat:13.7178,lng:100.5859,name:'เอกมัย'},{lat:13.7097,lng:100.5944,name:'ปุณณวิถี'},
   {lat:13.7017,lng:100.6012,name:'อ่อนนุช'},
 ];
-
-// BTS Silom line
-const BTS_SIL = [
-  {lat:13.7456,lng:100.5342,name:'สยาม'},
-  {lat:13.7380,lng:100.5321,name:'ราชดำริ'},
-  {lat:13.7286,lng:100.5296,name:'สีลม'},
-  {lat:13.7213,lng:100.5238,name:'ศาลาแดง'},
-  {lat:13.7186,lng:100.5192,name:'ช่องนนทรี'},
-  {lat:13.7155,lng:100.5136,name:'สุรศักดิ์'},
-  {lat:13.7130,lng:100.5072,name:'สะพานตากสิน'},
-  {lat:13.7118,lng:100.4985,name:'กรุงธนบุรี'},
-  {lat:13.7118,lng:100.4901,name:'วงเวียนใหญ่'},
+const BTS_SIL=[
+  {lat:13.7456,lng:100.5342,name:'สยาม'},{lat:13.7380,lng:100.5321,name:'ราชดำริ'},
+  {lat:13.7286,lng:100.5296,name:'สีลม'},{lat:13.7213,lng:100.5238,name:'ศาลาแดง'},
+  {lat:13.7186,lng:100.5192,name:'ช่องนนทรี'},{lat:13.7155,lng:100.5136,name:'สุรศักดิ์'},
+  {lat:13.7130,lng:100.5072,name:'สะพานตากสิน'},{lat:13.7118,lng:100.4901,name:'วงเวียนใหญ่'},
 ];
-
-// MRT Blue line (บางส่วน)
-const MRT_BLUE = [
-  {lat:13.8026,lng:100.5531,name:'ห้วยขวาง'},
-  {lat:13.7997,lng:100.5506,name:'จตุจักร'},
-  {lat:13.7820,lng:100.5501,name:'พหลโยธิน'},
-  {lat:13.7710,lng:100.5700,name:'รัชดา'},
-  {lat:13.7600,lng:100.5630,name:'ลาดพร้าว'},
-  {lat:13.7500,lng:100.5606,name:'สุทธิสาร'},
-  {lat:13.7443,lng:100.5606,name:'หัวลำโพง'},
-  {lat:13.7366,lng:100.5602,name:'สุขุมวิท (อโศก)'},
-  {lat:13.7274,lng:100.5685,name:'ศูนย์วัฒนธรรม'},
-  {lat:13.7310,lng:100.5418,name:'ลุมพินี'},
-  {lat:13.7286,lng:100.5296,name:'สีลม'},
-  {lat:13.7213,lng:100.5238,name:'สามย่าน'},
-  {lat:13.7390,lng:100.5110,name:'หัวลำโพง'},
+const MRT_BLUE=[
+  {lat:13.7997,lng:100.5506,name:'จตุจักร'},{lat:13.7820,lng:100.5501,name:'พหลโยธิน'},
+  {lat:13.7710,lng:100.5700,name:'รัชดา'},{lat:13.7600,lng:100.5630,name:'ลาดพร้าว'},
+  {lat:13.7500,lng:100.5606,name:'สุทธิสาร'},{lat:13.7366,lng:100.5602,name:'สุขุมวิท'},
+  {lat:13.7310,lng:100.5418,name:'ลุมพินี'},{lat:13.7286,lng:100.5296,name:'สีลม'},
+  {lat:13.7213,lng:100.5238,name:'สามย่าน'},{lat:13.7390,lng:100.5110,name:'หัวลำโพง'},
   {lat:13.7360,lng:100.5050,name:'วัดมังกร'},
-  {lat:13.7390,lng:100.5110,name:'เยาวราช (ใกล้)'},
+];
+const KHLONG_BOAT=[
+  {lat:13.7430,lng:100.5390,name:'ประตูน้ำ'},{lat:13.7440,lng:100.5450,name:'ราชประสงค์'},
+  {lat:13.7441,lng:100.5560,name:'นานา'},{lat:13.7410,lng:100.5660,name:'อโศก'},
+  {lat:13.7370,lng:100.5760,name:'พระโขนง'},{lat:13.7310,lng:100.5860,name:'สะพานกรุงเทพ'},
+];
+const BUS_ROUTES=[
+  {stops:[{lat:13.7660,lng:100.5387,name:'อนุสาวรีย์ชัย'},{lat:13.7563,lng:100.5389,name:'พญาไท'},{lat:13.7456,lng:100.5342,name:'สยาม'},{lat:13.7380,lng:100.5321,name:'ราชดำริ'},{lat:13.7286,lng:100.5296,name:'สีลม'}],color:'#7c3aed',name:'สาย 8',detail:'อนุสาวรีย์ชัย–สีลม'},
+  {stops:[{lat:13.7456,lng:100.5342,name:'สยาม'},{lat:13.7394,lng:100.5488,name:'ชิดลม'},{lat:13.7366,lng:100.5602,name:'อโศก'},{lat:13.7228,lng:100.5761,name:'ทองหล่อ'},{lat:13.7178,lng:100.5859,name:'เอกมัย'}],color:'#9333ea',name:'สาย 54',detail:'สยาม–เอกมัย'},
+  {stops:[{lat:13.8026,lng:100.5531,name:'หมอชิต'},{lat:13.7997,lng:100.5506,name:'จตุจักร'},{lat:13.7710,lng:100.5700,name:'รัชดา'},{lat:13.7600,lng:100.5630,name:'ลาดพร้าว'}],color:'#6d28d9',name:'สาย 77',detail:'หมอชิต–ลาดพร้าว'},
+  {stops:[{lat:13.7390,lng:100.5110,name:'เยาวราช'},{lat:13.7350,lng:100.5200,name:'บางรัก'},{lat:13.7286,lng:100.5296,name:'สีลม'},{lat:13.7213,lng:100.5238,name:'ศาลาแดง'}],color:'#8b5cf6',name:'สาย 47',detail:'เยาวราช–ศาลาแดง'},
+];
+const MOTO_STANDS=[
+  {lat:13.7460,lng:100.5346,name:'วินสยาม',price:'10-15฿'},{lat:13.7370,lng:100.5604,name:'วินอโศก',price:'10-20฿'},
+  {lat:13.8028,lng:100.5535,name:'วินหมอชิต',price:'10-15฿'},{lat:13.7288,lng:100.5298,name:'วินสีลม',price:'10-20฿'},
+  {lat:13.7020,lng:100.6015,name:'วินอ่อนนุช',price:'10-15฿'},{lat:13.7999,lng:100.5508,name:'วินจตุจักร',price:'10-15฿'},
+  {lat:13.7180,lng:100.5861,name:'วินเอกมัย',price:'10-20฿'},{lat:13.7392,lng:100.5112,name:'วินเยาวราช',price:'10-20฿'},
+  {lat:13.7712,lng:100.5702,name:'วินรัชดา',price:'10-20฿'},{lat:13.7565,lng:100.5391,name:'วินพญาไท',price:'10-15฿'},
+];
+const BIKE_STATIONS=[
+  {lat:13.7455,lng:100.5350,name:'Pun Pun สยาม',price:'10฿/ชม.'},{lat:13.7368,lng:100.5598,name:'Pun Pun อโศก',price:'10฿/ชม.'},
+  {lat:13.7380,lng:100.5325,name:'Pun Pun ราชดำริ',price:'10฿/ชม.'},{lat:13.7291,lng:100.5290,name:'Pun Pun สีลม',price:'10฿/ชม.'},
+  {lat:13.8000,lng:100.5503,name:'Pun Pun จตุจักร',price:'10฿/ชม.'},{lat:13.7182,lng:100.5856,name:'Pun Pun เอกมัย',price:'10฿/ชม.'},
 ];
 
-// เรือคลองแสนแสบ
-const KHLONG_BOAT = [
-  {lat:13.7430,lng:100.5390,name:'ประตูน้ำ'},
-  {lat:13.7440,lng:100.5450,name:'ราชประสงค์'},
-  {lat:13.7441,lng:100.5560,name:'นานา'},
-  {lat:13.7410,lng:100.5660,name:'อโศก'},
-  {lat:13.7370,lng:100.5760,name:'พระโขนง'},
-  {lat:13.7310,lng:100.5860,name:'สะพานกรุงเทพ'},
-];
-
-// วินมอเตอร์ไซค์ (จุดจริงโดยประมาณในกรุงเทพ)
-const MOTO_STANDS = [
-  {lat:13.7460,lng:100.5346,name:'วินสยาม',price:'10-15฿'},
-  {lat:13.7370,lng:100.5604,name:'วินอโศก',price:'10-20฿'},
-  {lat:13.8028,lng:100.5535,name:'วินหมอชิต',price:'10-15฿'},
-  {lat:13.7288,lng:100.5298,name:'วินสีลม',price:'10-20฿'},
-  {lat:13.7020,lng:100.6015,name:'วินอ่อนนุช',price:'10-15฿'},
-  {lat:13.7999,lng:100.5508,name:'วินจตุจักร',price:'10-15฿'},
-  {lat:13.7180,lng:100.5861,name:'วินเอกมัย',price:'10-20฿'},
-  {lat:13.7392,lng:100.5112,name:'วินเยาวราช',price:'10-20฿'},
-  {lat:13.7712,lng:100.5702,name:'วินรัชดา',price:'10-20฿'},
-  {lat:13.7565,lng:100.5391,name:'วินพญาไท',price:'10-15฿'},
-];
-
-// สถานีจักรยาน Pun Pun
-const BIKE_STATIONS = [
-  {lat:13.7455,lng:100.5350,name:'Pun Pun สยาม',price:'10฿/ชม.'},
-  {lat:13.7368,lng:100.5598,name:'Pun Pun อโศก',price:'10฿/ชม.'},
-  {lat:13.7380,lng:100.5325,name:'Pun Pun ราชดำริ',price:'10฿/ชม.'},
-  {lat:13.7291,lng:100.5290,name:'Pun Pun สีลม',price:'10฿/ชม.'},
-  {lat:13.8000,lng:100.5503,name:'Pun Pun จตุจักร',price:'10฿/ชม.'},
-  {lat:13.7182,lng:100.5856,name:'Pun Pun เอกมัย',price:'10฿/ชม.'},
-];
-
-// Heatmap data (ความหนาแน่นจราจร) — [lat, lng, intensity]
-function getHeatData(hour) {
-  const peak = (hour >= 7 && hour <= 9) || (hour >= 17 && hour <= 19);
-  const midday = hour >= 11 && hour <= 14;
-  const factor = peak ? 1.0 : midday ? 0.6 : 0.3;
-  const base = [
-    // ถนนสุขุมวิท
-    [13.7456,100.5342],[13.7394,100.5488],[13.7366,100.5602],
-    [13.7274,100.5685],[13.7228,100.5761],[13.7178,100.5859],[13.7097,100.5944],
-    // ถนนพระราม 4
-    [13.7310,100.5418],[13.7286,100.5296],[13.7350,100.5200],
-    // ถนนสีลม
-    [13.7286,100.5296],[13.7213,100.5238],[13.7186,100.5192],
-    // ถนนรัชดา
-    [13.7710,100.5700],[13.7600,100.5630],[13.7500,100.5606],
-    // ถนนพหลโยธิน
-    [13.8026,100.5531],[13.7820,100.5501],[13.7660,100.5387],
-    // แยกปทุมวัน
-    [13.7456,100.5342],[13.7440,100.5360],[13.7420,100.5320],
-    // แยกอโศก
-    [13.7366,100.5602],[13.7380,100.5620],[13.7355,100.5590],
-    // จตุจักร
-    [13.7997,100.5506],[13.8010,100.5520],[13.7985,100.5490],
-    // เยาวราช
-    [13.7390,100.5110],[13.7380,100.5090],[13.7400,100.5130],
-  ];
-  return base.map(([lat,lng]) => [lat, lng, factor * (0.5 + Math.random()*0.5)]);
+function getHeatData(h){
+  const peak=(h>=7&&h<=9)||(h>=17&&h<=19),mid=h>=11&&h<=14;
+  const f=peak?1.0:mid?0.6:0.3;
+  return[[13.7456,100.5342],[13.7394,100.5488],[13.7366,100.5602],[13.7274,100.5685],[13.7228,100.5761],
+    [13.7178,100.5859],[13.7097,100.5944],[13.7310,100.5418],[13.7286,100.5296],[13.7350,100.5200],
+    [13.7213,100.5238],[13.7186,100.5192],[13.7710,100.5700],[13.7600,100.5630],[13.7500,100.5606],
+    [13.8026,100.5531],[13.7820,100.5501],[13.7660,100.5387],[13.7440,100.5360],[13.7420,100.5320],
+    [13.7380,100.5620],[13.7355,100.5590],[13.7997,100.5506],[13.7390,100.5110],[13.7380,100.5090],
+  ].map(([la,ln])=>[la,ln,f*(0.5+Math.random()*0.5)]);
 }
 
-// Route data
-const ROUTES = {
-  fm: [
-    {id:'walk-fm',mode:'walk',icon:'🚶',name:'เดินไปสถานี',detail:'~350 ม.',time:5,price:0,freq:null},
-    {id:'moto-fm',mode:'moto',icon:'🛵',name:'มอเตอร์ไซค์รับจ้าง',detail:'วินปากซอย ราคาตามกฎหมาย',time:3,price:15,freq:null,tip:'10-15฿ ตามระยะ'},
-    {id:'taxi-fm',mode:'taxi',icon:'🚕',name:'แท็กซี่',detail:'เริ่ม 35฿ + 5.5฿/กม.',time:7,price:55,freq:null},
-    {id:'bike-fm',mode:'bike',icon:'🚲',name:'จักรยาน Pun Pun',detail:'สถานีใกล้ต้นทาง ~150 ม.',time:6,price:10,freq:null,tip:'10฿/ชม.แรก'},
+const ROUTES={
+  fm:[
+    {id:'walk-fm', mode:'walk',icon:'🚶',name:'เดินไปสถานี',      detail:'~350 ม. จากต้นทาง',                    time:5, price:0,  freq:null},
+    {id:'moto-fm', mode:'moto',icon:'🛵',name:'มอเตอร์ไซค์รับจ้าง',detail:'วินปากซอย ราคาตามกฎหมาย',             time:3, price:15, freq:null,     tip:'10-15฿ ตามระยะ'},
+    {id:'bus-fm',  mode:'bus', icon:'🚌',name:'รถเมล์ขสมก.',      detail:'ขึ้นหน้าบ้าน ลงป้ายใกล้สถานี',         time:10,price:8,  freq:'ทุก 10-20 น.',tip:'8-15฿ ตามระยะ'},
+    {id:'taxi-fm', mode:'taxi',icon:'🚕',name:'แท็กซี่',           detail:'เริ่ม 35฿ + 5.5฿/กม.',                time:7, price:55, freq:null},
+    {id:'bike-fm', mode:'bike',icon:'🚲',name:'จักรยาน Pun Pun',  detail:'สถานีใกล้ต้นทาง ~150 ม.',              time:6, price:10, freq:null,     tip:'10฿/ชม.แรก'},
   ],
-  main: [
-    {id:'bts-suk',mode:'bts',icon:'🚊',name:'BTS สายสุขุมวิท',detail:'5 สถานี ไม่ต้องเปลี่ยน',time:18,price:44,freq:'ทุก 3-5 นาที'},
-    {id:'mrt-blue',mode:'mrt',icon:'🚇',name:'MRT สายสีน้ำเงิน',detail:'เปลี่ยนอโศก 1 ครั้ง',time:22,price:38,freq:'ทุก 5-7 นาที'},
-    {id:'bts-mrt',mode:'bts',icon:'🚊',name:'BTS + MRT ต่อขบวน',detail:'3+2 สถานี เปลี่ยน 1 ครั้ง',time:28,price:72,freq:'ทุก 5 นาที'},
-    {id:'boat-kh',mode:'boat',icon:'⛵',name:'เรือคลองแสนแสบ',detail:'ราชประสงค์ → อโศก',time:25,price:14,freq:'ทุก 10 นาที'},
-    {id:'boat-cp',mode:'boat',icon:'⛵',name:'เรือด่วนเจ้าพระยา',detail:'ธงส้ม สาทร → พระจันทร์',time:35,price:15,freq:'ทุก 10-15 นาที'},
+  main:[
+    {id:'bts-suk', mode:'bts', icon:'🚊',name:'BTS สายสุขุมวิท',  detail:'5 สถานี ไม่ต้องเปลี่ยน',               time:18,price:44, freq:'ทุก 3-5 น.'},
+    {id:'mrt-blue',mode:'mrt', icon:'🚇',name:'MRT สายสีน้ำเงิน', detail:'เปลี่ยนอโศก 1 ครั้ง',                 time:22,price:38, freq:'ทุก 5-7 น.'},
+    {id:'bts-mrt', mode:'bts', icon:'🚊',name:'BTS + MRT ต่อขบวน',detail:'3+2 สถานี เปลี่ยน 1 ครั้ง',           time:28,price:72, freq:'ทุก 5 น.'},
+    {id:'bus-ac',  mode:'bus', icon:'🚌',name:'รถเมล์ปรับอากาศ',  detail:'ตรงไม่ต้องเปลี่ยน สาย 54/8',          time:35,price:15, freq:'ทุก 15-25 น.',tip:'8-15฿'},
+    {id:'bus-ord', mode:'bus', icon:'🚌',name:'รถเมล์ธรรมดา',     detail:'สาย 47/77 ไม่ปรับอากาศ',              time:40,price:8,  freq:'ทุก 10-20 น.',tip:'8฿ ตลอดสาย'},
+    {id:'boat-kh', mode:'boat',icon:'⛵',name:'เรือคลองแสนแสบ',   detail:'ราชประสงค์ → อโศก',                   time:25,price:14, freq:'ทุก 10 น.'},
+    {id:'boat-cp', mode:'boat',icon:'⛵',name:'เรือด่วนเจ้าพระยา',detail:'ธงส้ม สาทร → พระจันทร์',              time:35,price:15, freq:'ทุก 10-15 น.'},
   ],
-  lm: [
-    {id:'walk-lm',mode:'walk',icon:'🚶',name:'เดินจากสถานี',detail:'~450 ม.',time:7,price:0,freq:null},
-    {id:'moto-lm',mode:'moto',icon:'🛵',name:'มอเตอร์ไซค์รับจ้าง',detail:'วินหน้าสถานี ราคาตามกฎหมาย',time:4,price:20,freq:null,tip:'10-20฿ ตามระยะ'},
-    {id:'taxi-lm',mode:'taxi',icon:'🚕',name:'แท็กซี่',detail:'เริ่ม 35฿ + 5.5฿/กม.',time:10,price:70,freq:null},
-    {id:'bike-lm',mode:'bike',icon:'🚲',name:'จักรยาน Pun Pun',detail:'สถานีใกล้ปลายทาง ~200 ม.',time:8,price:10,freq:null,tip:'10฿/ชม.แรก'},
+  lm:[
+    {id:'walk-lm', mode:'walk',icon:'🚶',name:'เดินจากสถานี',     detail:'~450 ม. ถึงปลายทาง',                   time:7, price:0,  freq:null},
+    {id:'moto-lm', mode:'moto',icon:'🛵',name:'มอเตอร์ไซค์รับจ้าง',detail:'วินหน้าสถานี ราคาตามกฎหมาย',          time:4, price:20, freq:null,     tip:'10-20฿ ตามระยะ'},
+    {id:'bus-lm',  mode:'bus', icon:'🚌',name:'รถเมล์ขสมก.',      detail:'ต่อรถเมล์จากป้ายใกล้สถานี',            time:12,price:8,  freq:'ทุก 10-20 น.',tip:'8-15฿ ตามระยะ'},
+    {id:'taxi-lm', mode:'taxi',icon:'🚕',name:'แท็กซี่',           detail:'เริ่ม 35฿ + 5.5฿/กม.',                time:10,price:70, freq:null},
+    {id:'bike-lm', mode:'bike',icon:'🚲',name:'จักรยาน Pun Pun',  detail:'สถานีใกล้ปลายทาง ~200 ม.',             time:8, price:10, freq:null,     tip:'10฿/ชม.แรก'},
   ]
 };
+const MODE_COLOR={walk:'#475569',moto:'#dc2626',taxi:'#ca8a04',bike:'#16a34a',bts:'#059669',mrt:'#d97706',boat:'#2563eb',bus:'#7c3aed'};
+let sortState={fm:'time',main:'time',lm:'time'};
 
-const MODE_COLOR = {walk:'#90a4ae',moto:'#ff5252',taxi:'#ffd600',bike:'#69f0ae',bts:'#00c853',mrt:'#ff9100',boat:'#2196f3'};
-let sortState = {fm:'time',main:'time',lm:'time'};
-
-// ============================================================
-// MAP INIT
-// ============================================================
-const map = L.map('map', {
-  center: [13.7500, 100.5350],
-  zoom: 13,
-  zoomControl: true
-});
-
-// Light tile layer (CartoDB Positron)
-L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-  attribution: '&copy; <a href="https://carto.com/">CARTO</a>',
-  subdomains: 'abcd',
-  maxZoom: 19
+// MAP
+const map=L.map('map',{center:[13.7500,100.5350],zoom:13});
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{
+  attribution:'&copy; <a href="https://carto.com/">CARTO</a>',subdomains:'abcd',maxZoom:19
 }).addTo(map);
 
-// ============================================================
-// LAYERS
-// ============================================================
-const layers = {};
+const layers={};
+layers.heat=L.heatLayer(getHeatData(8),{radius:35,blur:25,maxZoom:16,max:1.0,
+  gradient:{0.2:'#00ff44',0.4:'#aaff00',0.6:'#ffbb00',0.8:'#ff6600',1.0:'#ff0000'}}).addTo(map);
 
-// Heatmap layer
-layers.heat = L.heatLayer(getHeatData(8), {
-  radius: 35, blur: 25, maxZoom: 16, max: 1.0,
-  gradient: {0.2:'#00ff44', 0.4:'#aaff00', 0.6:'#ffbb00', 0.8:'#ff6600', 1.0:'#ff0000'}
-}).addTo(map);
-
-// BTS Sukhumvit
-layers.bts = L.layerGroup();
-const btsSukLine = L.polyline(BTS_SUK.map(s=>[s.lat,s.lng]), {
-  color:'#00c853', weight:4, opacity:.85, dashArray:null
-}).addTo(layers.bts);
-BTS_SUK.forEach(s => {
-  L.circleMarker([s.lat,s.lng],{radius:5,fillColor:'#00c853',fillOpacity:1,color:'#fff',weight:2})
-    .bindPopup(`<b style="color:#00c853">BTS สุขุมวิท</b><br>${s.name}`)
-    .addTo(layers.bts);
-});
-// BTS Silom
-const btsSilLine = L.polyline(BTS_SIL.map(s=>[s.lat,s.lng]), {
-  color:'#00b0ff', weight:4, opacity:.85
-}).addTo(layers.bts);
-BTS_SIL.forEach(s => {
-  L.circleMarker([s.lat,s.lng],{radius:5,fillColor:'#00b0ff',fillOpacity:1,color:'#fff',weight:2})
-    .bindPopup(`<b style="color:#00b0ff">BTS สีลม</b><br>${s.name}`)
-    .addTo(layers.bts);
-});
+layers.bts=L.layerGroup();
+L.polyline(BTS_SUK.map(s=>[s.lat,s.lng]),{color:'#059669',weight:4,opacity:.9}).addTo(layers.bts);
+BTS_SUK.forEach(s=>L.circleMarker([s.lat,s.lng],{radius:5,fillColor:'#059669',fillOpacity:1,color:'#fff',weight:2}).bindPopup(`<b style="color:#059669">BTS สุขุมวิท</b><br>${s.name}`).addTo(layers.bts));
+L.polyline(BTS_SIL.map(s=>[s.lat,s.lng]),{color:'#0891b2',weight:4,opacity:.9}).addTo(layers.bts);
+BTS_SIL.forEach(s=>L.circleMarker([s.lat,s.lng],{radius:5,fillColor:'#0891b2',fillOpacity:1,color:'#fff',weight:2}).bindPopup(`<b style="color:#0891b2">BTS สีลม</b><br>${s.name}`).addTo(layers.bts));
 layers.bts.addTo(map);
 
-// MRT Blue
-layers.mrt = L.layerGroup();
-L.polyline(MRT_BLUE.map(s=>[s.lat,s.lng]),{color:'#ff9100',weight:4,opacity:.85}).addTo(layers.mrt);
-MRT_BLUE.forEach(s => {
-  L.circleMarker([s.lat,s.lng],{radius:5,fillColor:'#ff9100',fillOpacity:1,color:'#fff',weight:2})
-    .bindPopup(`<b style="color:#ff9100">MRT สีน้ำเงิน</b><br>${s.name}`)
-    .addTo(layers.mrt);
-});
+layers.mrt=L.layerGroup();
+L.polyline(MRT_BLUE.map(s=>[s.lat,s.lng]),{color:'#d97706',weight:4,opacity:.9}).addTo(layers.mrt);
+MRT_BLUE.forEach(s=>L.circleMarker([s.lat,s.lng],{radius:5,fillColor:'#d97706',fillOpacity:1,color:'#fff',weight:2}).bindPopup(`<b style="color:#d97706">MRT สีน้ำเงิน</b><br>${s.name}`).addTo(layers.mrt));
 layers.mrt.addTo(map);
 
-// เรือ
-layers.boat = L.layerGroup();
-L.polyline(KHLONG_BOAT.map(s=>[s.lat,s.lng]),{color:'#2196f3',weight:3,opacity:.8,dashArray:'8,5'}).addTo(layers.boat);
-KHLONG_BOAT.forEach(s => {
-  L.circleMarker([s.lat,s.lng],{radius:5,fillColor:'#2196f3',fillOpacity:1,color:'#fff',weight:2})
-    .bindPopup(`<b style="color:#2196f3">เรือแสนแสบ</b><br>${s.name}`)
-    .addTo(layers.boat);
-});
+layers.boat=L.layerGroup();
+L.polyline(KHLONG_BOAT.map(s=>[s.lat,s.lng]),{color:'#2563eb',weight:3,opacity:.85,dashArray:'8,5'}).addTo(layers.boat);
+KHLONG_BOAT.forEach(s=>L.circleMarker([s.lat,s.lng],{radius:5,fillColor:'#2563eb',fillOpacity:1,color:'#fff',weight:2}).bindPopup(`<b style="color:#2563eb">เรือแสนแสบ</b><br>${s.name}`).addTo(layers.boat));
 layers.boat.addTo(map);
 
-// วินมอเตอร์ไซค์
-layers.moto = L.layerGroup();
-const motoIcon = L.divIcon({
-  html:'<div style="background:#ff5252;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;border:2px solid #fff">🛵</div>',
-  className:'',iconSize:[20,20],iconAnchor:[10,10]
+layers.bus=L.layerGroup();
+const bsIcon=L.divIcon({html:'<div style="background:#7c3aed;width:12px;height:12px;border-radius:3px;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.3)"></div>',className:'',iconSize:[12,12],iconAnchor:[6,6]});
+BUS_ROUTES.forEach(r=>{
+  L.polyline(r.stops.map(s=>[s.lat,s.lng]),{color:r.color,weight:2.5,opacity:.7,dashArray:'10,6'})
+    .bindPopup(`<b style="color:${r.color}">🚌 ${r.name}</b><br>${r.detail}`).addTo(layers.bus);
+  r.stops.forEach(s=>L.marker([s.lat,s.lng],{icon:bsIcon})
+    .bindPopup(`<b style="color:#7c3aed">🚌 ${r.name}</b><br>${s.name}<br><i style="color:#6b7280">${r.detail}</i>`).addTo(layers.bus));
 });
-MOTO_STANDS.forEach(s => {
-  L.marker([s.lat,s.lng],{icon:motoIcon})
-    .bindPopup(`<b style="color:#ff5252">วินมอเตอร์ไซค์</b><br>${s.name}<br>ราคา: ${s.price}`)
-    .addTo(layers.moto);
-});
+layers.bus.addTo(map);
+
+layers.moto=L.layerGroup();
+MOTO_STANDS.forEach(s=>L.marker([s.lat,s.lng],{icon:L.divIcon({html:'<div style="background:#dc2626;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.25)">🛵</div>',className:'',iconSize:[20,20],iconAnchor:[10,10]})}).bindPopup(`<b style="color:#dc2626">วินมอเตอร์ไซค์</b><br>${s.name}<br>ราคา: ${s.price}`).addTo(layers.moto));
 layers.moto.addTo(map);
 
-// จักรยาน
-layers.bike = L.layerGroup();
-const bikeIcon = L.divIcon({
-  html:'<div style="background:#69f0ae;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;border:2px solid #fff">🚲</div>',
-  className:'',iconSize:[20,20],iconAnchor:[10,10]
-});
-BIKE_STATIONS.forEach(s => {
-  L.marker([s.lat,s.lng],{icon:bikeIcon})
-    .bindPopup(`<b style="color:#69f0ae">Pun Pun</b><br>${s.name}<br>${s.price}`)
-    .addTo(layers.bike);
-});
+layers.bike=L.layerGroup();
+BIKE_STATIONS.forEach(s=>L.marker([s.lat,s.lng],{icon:L.divIcon({html:'<div style="background:#16a34a;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.25)">🚲</div>',className:'',iconSize:[20,20],iconAnchor:[10,10]})}).bindPopup(`<b style="color:#16a34a">Pun Pun</b><br>${s.name}<br>${s.price}`).addTo(layers.bike));
 layers.bike.addTo(map);
 
-// Origin / Dest markers
-const originIcon = L.divIcon({
-  html:'<div style="background:#ffd600;color:#000;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:3px solid #fff;font-family:Sarabun">A</div>',
-  className:'',iconSize:[28,28],iconAnchor:[14,14]
-});
-const destIcon = L.divIcon({
-  html:'<div style="background:#ff5252;color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:3px solid #fff;font-family:Sarabun">B</div>',
-  className:'',iconSize:[28,28],iconAnchor:[14,14]
-});
-
-let markerA = null, markerB = null, routeLine = null;
-
-function updateMarkers() {
-  const o = LOCATIONS[document.getElementById('origin').value];
-  const d = LOCATIONS[document.getElementById('dest').value];
-  if(markerA) map.removeLayer(markerA);
-  if(markerB) map.removeLayer(markerB);
-  if(routeLine) map.removeLayer(routeLine);
-  markerA = L.marker([o.lat,o.lng],{icon:originIcon}).bindPopup(`<b>ต้นทาง</b><br>${o.name}`).addTo(map);
-  markerB = L.marker([d.lat,d.lng],{icon:destIcon}).bindPopup(`<b>ปลายทาง</b><br>${d.name}`).addTo(map);
-  routeLine = L.polyline([[o.lat,o.lng],[d.lat,d.lng]],{
-    color:'#38bdf8',weight:2,opacity:.5,dashArray:'6,6'
-  }).addTo(map);
-  const bounds = L.latLngBounds([[o.lat,o.lng],[d.lat,d.lng]]);
-  map.fitBounds(bounds, {padding:[60,60]});
+const mkIcon=(bg,fg,lbl)=>L.divIcon({html:`<div style="background:${bg};color:${fg};width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.2);font-family:Sarabun">${lbl}</div>`,className:'',iconSize:[28,28],iconAnchor:[14,14]});
+let markerA=null,markerB=null,routeLine=null;
+function updateMarkers(){
+  const o=LOCATIONS[document.getElementById('origin').value];
+  const d=LOCATIONS[document.getElementById('dest').value];
+  if(markerA)map.removeLayer(markerA);if(markerB)map.removeLayer(markerB);if(routeLine)map.removeLayer(routeLine);
+  markerA=L.marker([o.lat,o.lng],{icon:mkIcon('#f59e0b','#000','A')}).bindPopup(`<b>ต้นทาง</b> — ${o.name}`).addTo(map);
+  markerB=L.marker([d.lat,d.lng],{icon:mkIcon('#ef4444','#fff','B')}).bindPopup(`<b>ปลายทาง</b> — ${d.name}`).addTo(map);
+  routeLine=L.polyline([[o.lat,o.lng],[d.lat,d.lng]],{color:'#0ea5e9',weight:2,opacity:.4,dashArray:'6,6'}).addTo(map);
+  map.fitBounds(L.latLngBounds([[o.lat,o.lng],[d.lat,d.lng]]),{padding:[70,70]});
 }
 
-// ============================================================
-// SIDEBAR RENDER
-// ============================================================
-function renderRouteList(section) {
-  const data = ROUTES[section];
-  const by = sortState[section];
-  const sorted = [...data].sort((a,b)=>a[by]-b[by]);
-  const bestTime = Math.min(...data.map(r=>r.time));
-  const bestPrice = Math.min(...data.map(r=>r.price));
-  return sorted.map(r => {
-    const isBest = by==='time' ? r.time===bestTime : r.price===bestPrice;
-    return `<div class="route-row" onclick="highlightMode('${r.mode}')">
-      <div class="mode-icon" style="background:${MODE_COLOR[r.mode]}22">
-        <span style="font-size:14px">${r.icon}</span>
-      </div>
+function renderRouteList(section){
+  const data=ROUTES[section],by=sortState[section];
+  const sorted=[...data].sort((a,b)=>a[by]-b[by]);
+  const bT=Math.min(...data.map(r=>r.time)),bP=Math.min(...data.map(r=>r.price));
+  return sorted.map(r=>{
+    const isBest=by==='time'?r.time===bT:r.price===bP;
+    return`<div class="route-row" onclick="highlightMode('${r.mode}')">
+      <div class="mode-icon" style="background:${MODE_COLOR[r.mode]}18"><span style="font-size:14px">${r.icon}</span></div>
       <div class="rinfo">
         <div class="rinfo-name">${r.name}</div>
         <div class="rinfo-detail">${r.detail}${r.tip?' · '+r.tip:''}</div>
@@ -536,105 +371,50 @@ function renderRouteList(section) {
         ${isBest?'<span class="best-tag">ดีที่สุด</span>':''}
       </div>
       <div class="rmeta">
-        <div class="rmeta-time">${r.time}นาที</div>
+        <div class="rmeta-time">${r.time}น.</div>
         <div class="rmeta-price">${r.price===0?'ฟรี':r.price+'฿'}</div>
       </div>
     </div>`;
   }).join('');
 }
 
-function renderAll() {
-  document.getElementById('fm-list').innerHTML = renderRouteList('fm');
-  document.getElementById('main-list').innerHTML = renderRouteList('main');
-  document.getElementById('lm-list').innerHTML = renderRouteList('lm');
-
-  const fmBest = ROUTES.fm.reduce((a,b)=>a.time<b.time?a:b);
-  const mainBest = ROUTES.main.reduce((a,b)=>a.time<b.time?a:b);
-  const lmBest = ROUTES.lm.reduce((a,b)=>a.time<b.time?a:b);
-  const cheapFM = ROUTES.fm.reduce((a,b)=>a.price<b.price?a:b);
-  const cheapMain = ROUTES.main.reduce((a,b)=>a.price<b.price?a:b);
-  const cheapLM = ROUTES.lm.reduce((a,b)=>a.price<b.price?a:b);
-  const totalFastest = fmBest.time + mainBest.time + lmBest.time;
-  const totalCheapest = cheapFM.price + cheapMain.price + cheapLM.price;
-
-  document.getElementById('comparegrid').innerHTML = `
-    <div class="cmp-card">
-      <div class="cmp-label">เร็วที่สุด</div>
-      <div class="cmp-val">${totalFastest}นาที</div>
-      <div class="cmp-sub">${fmBest.icon}+${mainBest.icon}+${lmBest.icon}</div>
-    </div>
-    <div class="cmp-card">
-      <div class="cmp-label">ถูกที่สุด</div>
-      <div class="cmp-val">${totalCheapest===0?'ฟรี':totalCheapest+'฿'}</div>
-      <div class="cmp-sub">${cheapFM.icon}+${cheapMain.icon}+${cheapLM.icon}</div>
-    </div>
-    <div class="cmp-card">
-      <div class="cmp-label">แนะนำ</div>
-      <div class="cmp-val">26นาที</div>
-      <div class="cmp-sub">🚶+🚊+🚶 / 44฿</div>
-    </div>
-    <div class="cmp-card">
-      <div class="cmp-label">ระยะทาง</div>
-      <div class="cmp-val">~8.5กม.</div>
-      <div class="cmp-sub">5 สถานีหลัก</div>
-    </div>
-  `;
+function renderAll(){
+  ['fm','main','lm'].forEach(s=>document.getElementById(s+'-list').innerHTML=renderRouteList(s));
+  const best=(arr,k)=>arr.reduce((a,b)=>a[k]<b[k]?a:b);
+  const fB=best(ROUTES.fm,'time'),mB=best(ROUTES.main,'time'),lB=best(ROUTES.lm,'time');
+  const fC=best(ROUTES.fm,'price'),mC=best(ROUTES.main,'price'),lC=best(ROUTES.lm,'price');
+  const tc=fC.price+mC.price+lC.price;
+  document.getElementById('comparegrid').innerHTML=`
+    <div class="cmp-card"><div class="cmp-label">เร็วที่สุด</div><div class="cmp-val">${fB.time+mB.time+lB.time}น.</div><div class="cmp-sub">${fB.icon}+${mB.icon}+${lB.icon}</div></div>
+    <div class="cmp-card"><div class="cmp-label">ถูกที่สุด</div><div class="cmp-val">${tc===0?'ฟรี':tc+'฿'}</div><div class="cmp-sub">${fC.icon}+${mC.icon}+${lC.icon}</div></div>
+    <div class="cmp-card"><div class="cmp-label">แนะนำ</div><div class="cmp-val">26น.</div><div class="cmp-sub">🚶+🚊+🚶 / 44฿</div></div>
+    <div class="cmp-card"><div class="cmp-label">ระยะทาง</div><div class="cmp-val">~8.5กม.</div><div class="cmp-sub">5 สถานีหลัก</div></div>`;
 }
 
-function setSort(section, by) {
-  sortState[section] = by;
-  ['time','price'].forEach(t => {
-    const btn = document.getElementById(`${section}-${t}-btn`);
-    if(btn) btn.classList.toggle('active', t===by);
-  });
+function setSort(section,by){
+  sortState[section]=by;
+  ['time','price'].forEach(t=>{const b=document.getElementById(`${section}-${t}-btn`);if(b)b.classList.toggle('active',t===by);});
   renderAll();
 }
 
-function highlightMode(mode) {
-  // Flash the relevant layer
-  if(mode==='bts') { map.removeLayer(layers.bts); setTimeout(()=>layers.bts.addTo(map),150); }
-  if(mode==='mrt') { map.removeLayer(layers.mrt); setTimeout(()=>layers.mrt.addTo(map),150); }
-  if(mode==='boat') { map.removeLayer(layers.boat); setTimeout(()=>layers.boat.addTo(map),150); }
-  if(mode==='moto') { map.removeLayer(layers.moto); setTimeout(()=>layers.moto.addTo(map),150); }
-  if(mode==='bike') { map.removeLayer(layers.bike); setTimeout(()=>layers.bike.addTo(map),150); }
+const layerVisible={heat:true,bts:true,mrt:true,boat:true,bus:true,moto:true,bike:true};
+function toggleLayer(id){
+  layerVisible[id]=!layerVisible[id];
+  layerVisible[id]?layers[id].addTo(map):map.removeLayer(layers[id]);
+  document.getElementById('btn-'+id).classList.toggle('on',layerVisible[id]);
 }
-
-// ============================================================
-// CONTROLS
-// ============================================================
-const layerVisible = {heat:true, bts:true, mrt:true, boat:true, moto:true, bike:true};
-function toggleLayer(id) {
-  layerVisible[id] = !layerVisible[id];
-  if(layerVisible[id]) layers[id].addTo(map);
-  else map.removeLayer(layers[id]);
-  const btn = document.getElementById('btn-'+id);
-  btn.classList.toggle('on', layerVisible[id]);
+function highlightMode(mode){
+  const l={bts:layers.bts,mrt:layers.mrt,boat:layers.boat,bus:layers.bus,moto:layers.moto,bike:layers.bike}[mode];
+  if(l&&layerVisible[mode]){map.removeLayer(l);setTimeout(()=>l.addTo(map),150);}
 }
-
-function updateTime(val) {
-  const h = parseInt(val);
-  document.getElementById('timeLbl').textContent = h.toString().padStart(2,'0')+':00';
-  if(layerVisible.heat) {
-    map.removeLayer(layers.heat);
-    layers.heat = L.heatLayer(getHeatData(h), {
-      radius:35, blur:25, maxZoom:16, max:1.0,
-      gradient:{0.2:'#00ff44',0.4:'#aaff00',0.6:'#ffbb00',0.8:'#ff6600',1.0:'#ff0000'}
-    }).addTo(map);
-  }
+function updateTime(val){
+  const h=parseInt(val);
+  document.getElementById('timeLbl').textContent=h.toString().padStart(2,'0')+':00';
+  if(layerVisible.heat){map.removeLayer(layers.heat);layers.heat=L.heatLayer(getHeatData(h),{radius:35,blur:25,maxZoom:16,max:1.0,gradient:{0.2:'#00ff44',0.4:'#aaff00',0.6:'#ffbb00',0.8:'#ff6600',1.0:'#ff0000'}}).addTo(map);}
 }
+function swapLoc(){const o=document.getElementById('origin'),d=document.getElementById('dest');const t=o.value;o.value=d.value;d.value=t;updateMarkers();}
+function recalcRoute(){updateMarkers();}
 
-function swapLoc() {
-  const o = document.getElementById('origin');
-  const d = document.getElementById('dest');
-  const tmp = o.value; o.value = d.value; d.value = tmp;
-  updateMarkers();
-}
-
-function recalcRoute() { updateMarkers(); }
-
-// ============================================================
-// INIT
-// ============================================================
 updateMarkers();
 renderAll();
 </script>
